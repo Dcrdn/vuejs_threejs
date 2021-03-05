@@ -3,9 +3,11 @@
 </template>
 <script>
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { OrbitControls } from './jsm/controls/OrbitControls.js';
 import Stats from "three/examples/jsm/libs/stats.module.js";
 import dat from 'three/examples/jsm/libs/dat.gui.module.js';
+// import Stats from "./jsm/libs/stats.module.js";
+// import dat from './jsm/libs/dat.gui.module.js';
 
 export default {
   name: 'Example',
@@ -17,12 +19,11 @@ export default {
       camera: null,
       mesh: null,
       stats: null,
-      cameraControls: null
+      cameraControls: null,
     }
   },
   methods: {
     init: function() {
-
         // Renderer engine
         this.renderer = new THREE.WebGLRenderer({antialias: true});
         this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -48,7 +49,7 @@ export default {
 
         // SCENE GRAPH
         this.scene.add(this.mesh);
-
+        this.scene.add(this.mesh);
         // GUI
         let gui = new dat.GUI();
 
@@ -97,6 +98,36 @@ export default {
         let chbWireframe = appearMenu.add(this.mesh.material, "wireframe").setValue(true).name("Wireframe").onChange(function(value) {
 
         });
+
+        var params = {
+            modelcolor: "#ff0000",
+            direction: "Derecha",
+            forma: "Cubo"
+        };
+
+        // Color Menu
+        let colorMenu = gui.addFolder("Color del cubo");
+
+        let chColor = colorMenu.addColor(params, 'modelcolor').name('Model Color').onChange(function() {
+                // this.mesh.material.color.set = "red"
+                console.log(this.mesh.material.color);
+                // this.mesh.color.set(params.modelcolor)
+                // materialmodel.color.set(params.modelcolor);
+        });
+
+        // Movimiento
+        let movimientoMenu = gui.addFolder("Movimiento del cubo");
+        let opMovimiento = movimientoMenu.add(params, 'direction', ['Derecha', 'Izquierda']).name("Dirección").onChange(function(value) {
+            alert(value);   
+            this.mesh.rotation.y = this.mesh.rotation.y
+        });
+
+        // Forma
+        let formaMenu = gui.addFolder("Forma del cubo");
+        let opForma = formaMenu.add(params, 'forma', ['Cubo', 'Esfera', 'Piramide']).name("Forma").onChange(function(value) {
+
+        });
+
 
         rotMenu.open();
         gui.close()
