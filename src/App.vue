@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    <ThreeTest/>
+    <Example/>
   </div>
 </template>
 
 <script>
 import ThreeTest from './components/ThreeTest'
+import Example from './components/Example'
 
 export default {
   name: 'App',
   components: {
-    ThreeTest
+    Example
   }
 }
 </script>
+  
